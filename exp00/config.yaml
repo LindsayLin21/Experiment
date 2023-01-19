@@ -1,0 +1,91 @@
+device: cpu
+cudnn:
+  benchmark: True
+  deterministic: False
+regress:
+  oldModel: ''
+  old_nClasses: 10
+dataset:
+  name: CIFAR100
+  dataset_dir: ~/.torch/datasets/CIFAR100
+  image_size: 32
+  n_channels: 3
+  n_classes: 100
+model:
+  type: cifar10.resnet
+  name: ResNet18
+  init_mode: ''
+  resnet:
+    depth: 110
+    n_blocks: [2, 2, 2, 2]
+    block_type: basic
+    initial_channels: 16
+  densenet:
+    depth: 100
+    n_blocks: [6, 12, 24, 16]
+    block_type: bottleneck
+    growth_rate: 12
+    drop_rate: 0.0
+    compression_rate: 0.5
+  vgg:
+    n_channels: [64, 128, 256, 512, 512]
+    n_layers: [2, 2, 3, 3, 3]
+    use_bn: True
+train:
+  resume: False
+  checkpoint: ''
+  precision: O0
+  batch_size: 64
+  use_test_as_val: False
+  val_ratio: 0.1
+  optimizer: sgd
+  base_lr: 0.1
+  momentum: 0.9
+  nesterov: True
+  weight_decay: 0.0001
+  no_weight_decay_on_bn: False
+  epochs: 200
+  start_epoch: 0
+  seed: 1
+  output_dir: D:\Regression on DNNs\reduce_regress\exp00
+  log_period: 100
+  checkpoint_period: 10
+  select:
+    mode: ''
+    random: 0.5
+    n_class: 0
+    class_list: []
+  dataloader:
+    batch_size: 64
+    num_workers: 2
+optim:
+  adam:
+    betas: (0.9, 0.999)
+scheduler:
+  type: multistep
+  milestones: [80, 120]
+  lr_decay: 0.1
+validation:
+  batch_size: 64
+  dataloader:
+    num_workers: 2
+augmentation:
+  use_random_crop: False
+  use_random_horizontal_flip: False
+  use_cutout: False
+  random_crop:
+    padding: 4
+    fill: 0
+    padding_mode: constant
+  random_horizontal_flip:
+    prob: 0.5
+  cutout:
+    n_holes: 1
+    length: 16
+test:
+  checkpoint: ''
+  output_dir: ''
+  batch_size: 64
+  dataloader:
+    num_workers: 2
+    pin_memory: False
