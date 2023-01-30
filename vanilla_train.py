@@ -22,6 +22,7 @@ from src import (
     create_initializer,
     create_optimizer,
     create_scheduler,
+    create_regress_loss,
     get_default_config,
     update_config,
 )
@@ -111,7 +112,7 @@ def validate(epoch, config, model, valid_loader, optimizer, scheduler, best_acc=
 
     with torch.no_grad():
         for data in valid_loader:
-            nputs, labels = data
+            inputs, labels = data
             inputs, labels = inputs.to(device), labels.to(device)
             _, outputs = model(inputs)
             _, predicted = torch.max(outputs.data, 1)
@@ -172,7 +173,7 @@ def main():
     start_epoch = 0
     if config.train.resume:
         if config.train.checkpoint != '':
-            checkpoint = torch.load(config.train.checkpoint, map_location='cpu')
+            checkpoint = torch.load(config.train.checkpoint, map_location='cpu') ############
             start_epoch = checkpoint['epoch']
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optim_state_dict'])
@@ -198,6 +199,9 @@ def main():
 
     optimizer = create_optimizer(config, model)
     scheduler = create_scheduler(optimizer, config)
+
+    if config.regress.mode != '':
+        regress_loss = create_regress_loss(config)
     
     best_acc = 0.
     elapsed_time = 0
@@ -207,7 +211,7 @@ def main():
 
         train(epoch, config, model, train_dataloader, optimizer)
 
-        best_acc = validate(epoch, config, model, valid_dataloader, optimizer, best_acc=best_acc)
+        best_acc = validate(epoch, config, model, valid_dataloader, optimizer, scheduler, best_acc=best_acc)
 
         epoch_time = time.time() - start_time
         elapsed_time += epoch_time
