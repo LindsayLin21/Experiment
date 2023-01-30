@@ -5,8 +5,7 @@ import torch
 import torch.nn as nn
 
 def create_model(config):
-    module_name = ''.join(re.findall(r'[A-Za-z]', config.model.name)) # e.g., ResNet18 --> module name: resnet
-    module_name = module_name.lower()
+    module_name = string.lower(''.join(re.findall(r'[A-Za-Z]', config.model.name))) # e.g., ResNet18 --> module name: resnet
     module = importlib.import_module(
         'src.models'
         f'.{config.model.type}.{module_name}')

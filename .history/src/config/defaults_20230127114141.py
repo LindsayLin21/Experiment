@@ -12,13 +12,10 @@ config.cudnn.deterministic = False
 config.regress = ConfigNode()
 config.regress.oldModel = ''
 config.regress.old_nClasses = 10
-config.regress.mode = ''
-config.regress.nsr_M = 5
-config.regress.nsr_weight = 1
-config.regress.qp_weight = 0.001
 
 config.dataset = ConfigNode()
 config.dataset.name = 'CIFAR10'
+config.dataset.dataset_dir = ''
 config.dataset.image_size = 32
 config.dataset.n_channels = 3
 config.dataset.n_classes = 10
@@ -89,8 +86,8 @@ config.optim.adam.betas = (0.9, 0.999)
 config.scheduler = ConfigNode()
 # main scheduler (multistep)
 config.scheduler.type = 'multistep'
-config.scheduler.milestones = [60, 120, 160]
-config.scheduler.lr_decay = 0.2
+config.scheduler.milestones = [80, 120]
+config.scheduler.lr_decay = 0.1
 
 # train data loader
 config.train.dataloader = ConfigNode()

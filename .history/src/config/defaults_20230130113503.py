@@ -13,12 +13,10 @@ config.regress = ConfigNode()
 config.regress.oldModel = ''
 config.regress.old_nClasses = 10
 config.regress.mode = ''
-config.regress.nsr_M = 5
-config.regress.nsr_weight = 1
-config.regress.qp_weight = 0.001
 
 config.dataset = ConfigNode()
 config.dataset.name = 'CIFAR10'
+config.dataset.dataset_dir = ''
 config.dataset.image_size = 32
 config.dataset.n_channels = 3
 config.dataset.n_classes = 10

@@ -96,12 +96,12 @@ def create_dataset(config: yacs.config.CfgNode,
                 train_dataset.targets = np.array(train_dataset.targets)[train_idx].tolist()
                 # Select test data
                 indices = list()
-                for j in range(len(val_dataset)):
+                for j in range(len(test_dataset)):
                     if val_dataset.targets[j] in target_classes:
                         indices.append(j)
                 val_idx = np.array(indices)
-                val_dataset.data = val_dataset.data[val_idx, :, :, :]
-                val_dataset.targets = np.array(val_dataset.targets)[val_idx].tolist()
+                val_dataset.data = test_dataset.data[val_idx, :, :, :]
+                val_dataset.targets = np.array(test_dataset.targets)[val_idx].tolist()
             
             return train_dataset, val_dataset
     

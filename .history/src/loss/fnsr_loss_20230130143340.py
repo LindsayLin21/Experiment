@@ -5,5 +5,5 @@ class FNSR_Loss:
         self.device = torch.device(config.device)
         
         
-    # def __call__(self, *args: Any, **kwds: Any) -> Any:
-    #     pass
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        pass

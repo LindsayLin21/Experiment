@@ -2,7 +2,7 @@ device: cuda
 dataset:
   name: CIFAR10
 model:
-  type: cifar10
+  type: cifar
   name: ResNet18
   init_mode: ''
 train:
@@ -25,6 +25,7 @@ validation:
   dataloader:
     num_workers: 2
 scheduler:
+  epochs: 200
   type: multistep
   milestones: [60, 120, 160]
   lr_decay: 0.2

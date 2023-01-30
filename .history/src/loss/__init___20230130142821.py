@@ -9,8 +9,6 @@ def create_loss():
 
 def create_regress_loss(config):
     if config.regress.mode == 'nsr':
-        loss = NSRLoss(config)
+        train_loss = NSRLoss(config)
     elif config.regress.mode == 'qp':
-        loss = QPLoss(config)
-
-    return loss
+        train_loss = QPLoss(config)
