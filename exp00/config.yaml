@@ -10,10 +10,11 @@ regress:
   nsr_weight: 1
   qp_weight: 0.001
 dataset:
+  dataset_dir: ~/.torch/datasets/CIFAR100
   name: CIFAR100
   image_size: 32
   n_channels: 3
-  n_classes: 10
+  n_classes: 100
 model:
   type: cifar10.resnet
   name: ResNet18

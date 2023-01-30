@@ -12,7 +12,7 @@ def update_config(config):
         config.dataset.n_classes = int(config.dataset.name[5:])
     elif config.dataset.name in ['MNIST', 'FashionMNIST']:
         dataset_dir = '~/.torch/datasets'
-        config.dataset.dataset_dir = dataset_dir
+        # config.dataset.dataset_dir = dataset_dir
         config.dataset.image_size = 28
         config.dataset.n_channels = 1
         config.dataset.n_classes = 10
