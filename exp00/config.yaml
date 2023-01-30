@@ -5,12 +5,15 @@ cudnn:
 regress:
   oldModel: ''
   old_nClasses: 10
+  mode: ''
+  nsr_M: 5
+  nsr_weight: 1
+  qp_weight: 0.001
 dataset:
   name: CIFAR100
-  dataset_dir: ~/.torch/datasets/CIFAR100
   image_size: 32
   n_channels: 3
-  n_classes: 100
+  n_classes: 10
 model:
   type: cifar10.resnet
   name: ResNet18
@@ -42,12 +45,12 @@ train:
   base_lr: 0.1
   momentum: 0.9
   nesterov: True
-  weight_decay: 0.0001
+  weight_decay: 0.0005
   no_weight_decay_on_bn: False
   epochs: 200
   start_epoch: 0
   seed: 1
-  output_dir: D:\Regression on DNNs\reduce_regress\exp00
+  output_dir: exp00
   log_period: 100
   checkpoint_period: 10
   select:
@@ -63,8 +66,8 @@ optim:
     betas: (0.9, 0.999)
 scheduler:
   type: multistep
-  milestones: [80, 120]
-  lr_decay: 0.1
+  milestones: [60, 120, 160]
+  lr_decay: 0.2
 validation:
   batch_size: 64
   dataloader:

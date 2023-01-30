@@ -1,5 +1,0 @@
-device: cpu
-dataset:
-  name: CIFAR100
-  dataset_dir: ~/.torch/datasets/CIFAR100
-  n_classes: 100
