@@ -18,6 +18,7 @@ config.regress.nsr_weight = 1
 config.regress.qp_weight = 0.001
 
 config.dataset = ConfigNode()
+config.dataset.dataset_dir = ''
 config.dataset.name = 'CIFAR10'
 config.dataset.image_size = 32
 config.dataset.n_channels = 3
