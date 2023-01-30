@@ -42,6 +42,8 @@ global_step = 0
 criterion = nn.CrossEntropyLoss().cuda()
 criterion.__init__(reduce=False)
 
+RegressLoss = None
+
 def load_config():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str)
@@ -80,8 +82,18 @@ def train(epoch, config, model, train_loader, optimizer):
         inputs, labels = inputs.to(device), labels.to(device)
 
         # Forward propagation, compute loss, get predictions        
-        _, outputs = model(inputs)
+        response, outputs = model(inputs)
         loss = criterion(outputs, labels)
+        # Calculate regress loss
+        if config.regress.mode == 'qp':
+            oldModel = torch.load(config.regress.oldModel, map_location=device)
+            regress_loss = RegressLoss(response, oldModel, model)
+            loss += regress_loss
+        elif config.regress.model == 'nsr':
+            regress_loss = RegressLoss(response, labels)
+            loss += regress_loss
+            
+
         optimizer.zero_grad()
         _, predicted = torch.max(outputs.data, 1)
 
@@ -142,6 +154,7 @@ def validate(epoch, config, model, valid_loader, optimizer, scheduler, best_acc=
 
 
 def main():
+    global RegressLoss
     config = load_config()
 
     set_seed(config)
@@ -201,7 +214,7 @@ def main():
     scheduler = create_scheduler(optimizer, config)
 
     if config.regress.mode != '':
-        regress_loss = create_regress_loss(config)
+        RegressLoss = create_regress_loss(config)
     
     best_acc = 0.
     elapsed_time = 0
